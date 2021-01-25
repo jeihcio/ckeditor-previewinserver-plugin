@@ -1,6 +1,7 @@
 ﻿(function() {
     'use strict';
     var pluginName = 'previewinserver';
+    var pluginNameForm = 'serverPreviewInServerForm';
 
     CKEDITOR.plugins.add(pluginName, {
         lang: 'af,ar,az,bg,bn,bs,ca,cs,cy,da,de,de-ch,el,en,en-au,en-ca,en-gb,eo,es,es-mx,et,eu,fa,fi,fo,fr,fr-ca,gl,gu,he,hi,hr,hu,id,is,it,ja,ka,km,ko,ku,lt,lv,mk,mn,ms,nb,nl,no,oc,pl,pt,pt-br,ro,ru,si,sk,sl,sq,sr,sr-latn,sv,th,tr,tt,ug,uk,vi,zh,zh-cn',
@@ -20,10 +21,16 @@
 
     CKEDITOR.plugins.previewinserver = {
         openPreview: function(editor) {
-            let form = createFormEmpty(editor);
+            let form = document.getElementById(pluginNameForm);
 
-            createFields(editor, form);
-            addFormInBody(form);
+            if (!form) {
+                form = createFormEmpty(editor);
+                createFields(editor, form);
+                addFormInBody(form);
+            } else {
+                updateValueFieldWithHtml(editor);
+            }
+
             submitForm(form);
         }
     }
@@ -35,8 +42,8 @@
 
         form.setAttribute('method', method);
         form.setAttribute('action', url);
-        form.setAttribute('name', 'serverPreviewInServerForm');
-        form.setAttribute('id', 'serverPreviewInServerForm');
+        form.setAttribute('name', pluginNameForm);
+        form.setAttribute('id', pluginNameForm);
         form.setAttribute('target', '_blank');
 
         form.style.display = 'none';
@@ -50,6 +57,9 @@
             let input = createField(field, form);
             form.appendChild(input);
         });
+
+        let input = createFieldWithValueTheCkeditor(editor);
+        form.appendChild(input);
     }
 
     function createField(field) {
@@ -60,6 +70,23 @@
         input.setAttribute('value', field.value);
 
         return input;
+    }
+
+    function createFieldWithValueTheCkeditor(editor) {
+        let field = {
+            key: editor.config.previewInServerNameFieldWithHtml,
+            value: editor.getData()
+        };
+
+        return createField(field);
+    }
+
+    function updateValueFieldWithHtml(editor) {
+        let selector = `#${pluginNameForm} > input[name='${editor.config.previewInServerNameFieldWithHtml}']`;
+        let field = document.querySelector(selector);
+        let value = editor.getData();
+
+        field.setAttribute('value', value);
     }
 
     function addFormInBody(form) {
