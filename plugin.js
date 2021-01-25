@@ -22,6 +22,7 @@
         openPreview: function(editor) {
             let form = createFormEmpty(editor);
 
+            createFields(editor, form);
             addFormInBody(form);
             submitForm(form);
         }
@@ -37,8 +38,28 @@
         form.setAttribute('name', 'serverPreviewInServerForm');
         form.setAttribute('id', 'serverPreviewInServerForm');
         form.setAttribute('target', '_blank');
+
         form.style.display = 'none';
         return form;
+    }
+
+    function createFields(editor, form) {
+        let fields = editor.config.previewInServerFields;
+
+        fields.forEach(function(field) {
+            let input = createField(field, form);
+            form.appendChild(input);
+        });
+    }
+
+    function createField(field) {
+        let input = document.createElement('Input');
+
+        input.setAttribute('type', 'hidden');
+        input.setAttribute('name', field.key);
+        input.setAttribute('value', field.value);
+
+        return input;
     }
 
     function addFormInBody(form) {
