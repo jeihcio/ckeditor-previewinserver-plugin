@@ -1,5 +1,5 @@
 ﻿(function() {
-
+    'use strict';
     var pluginName = 'previewinserver';
 
     CKEDITOR.plugins.add(pluginName, {
@@ -7,11 +7,7 @@
         icons: 'previewinserver',
         init: function(editor) {
             editor.addCommand(pluginName, {
-                exec: function(editor) {
-                    alert("teste");
-                    var now = new Date();
-                    editor.insertHtml('The current date and time is: <em>' + now.toString() + '</em>');
-                }
+                exec: CKEDITOR.plugins.previewinserver.openPreview
             });
 
             editor.ui.addButton(pluginName, {
@@ -21,4 +17,26 @@
             });
         }
     });
+
+    CKEDITOR.plugins.previewinserver = {
+        openPreview: function(editor) {
+            let form = createForm(editor);
+
+
+        }
+    }
+
+    function createForm(editor) {
+        let form = document.createElement('Form');
+        let method = editor.config.previewInServerMethod || 'POST';
+        let url = editor.config.previewInServerUrl;
+
+        form.setAttribute('method', method);
+        form.setAttribute('action', url);
+        form.setAttribute('name', 'serverPreviewInServerForm');
+        form.setAttribute('id', 'serverPreviewInServerForm');
+        form.setAttribute('target', '_blank');
+        form.style.display = 'none';
+        return form;
+    }
 })();
