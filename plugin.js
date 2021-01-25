@@ -20,13 +20,13 @@
 
     CKEDITOR.plugins.previewinserver = {
         openPreview: function(editor) {
-            let form = createForm(editor);
+            let form = createFormEmpty(editor);
 
 
         }
     }
 
-    function createForm(editor) {
+    function createFormEmpty(editor) {
         let form = document.createElement('Form');
         let method = editor.config.previewInServerMethod || 'POST';
         let url = editor.config.previewInServerUrl;
