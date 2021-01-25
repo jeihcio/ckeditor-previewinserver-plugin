@@ -22,13 +22,14 @@
         openPreview: function(editor) {
             let form = createFormEmpty(editor);
 
-
+            addFormInBody(form);
+            submitForm(form);
         }
     }
 
     function createFormEmpty(editor) {
         let form = document.createElement('Form');
-        let method = editor.config.previewInServerMethod || 'POST';
+        let method = editor.config.previewInServerMethod || 'Get';
         let url = editor.config.previewInServerUrl;
 
         form.setAttribute('method', method);
@@ -38,5 +39,13 @@
         form.setAttribute('target', '_blank');
         form.style.display = 'none';
         return form;
+    }
+
+    function addFormInBody(form) {
+        document.getElementsByTagName('body')[0].appendChild(form);
+    }
+
+    function submitForm(form) {
+        form.submit();
     }
 })();
