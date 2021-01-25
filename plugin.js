@@ -54,7 +54,7 @@
         let fields = editor.config.previewInServerFields;
 
         fields.forEach(function(field) {
-            let input = createField(field, form);
+            let input = createField(field);
             form.appendChild(input);
         });
 
@@ -64,10 +64,12 @@
 
     function createField(field) {
         let input = document.createElement('Input');
+        let selector = field.selector;
+        let value = field.value || document.querySelector(selector).value || "";
 
         input.setAttribute('type', 'hidden');
         input.setAttribute('name', field.key);
-        input.setAttribute('value', field.value);
+        input.setAttribute('value', value);
 
         return input;
     }
