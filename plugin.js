@@ -21,18 +21,20 @@
 
     CKEDITOR.plugins.previewinserver = {
         openPreview: function(editor) {
-            let form = document.getElementById(pluginNameForm);
+            removeFormIfExists(pluginNameForm);
 
-            if (!form) {
-                form = createFormEmpty(editor);
-                createFields(editor, form);
-                addFormInBody(form);
-            } else {
-                updateValueFieldWithHtml(editor);
-            }
-
+            let form = createFormEmpty(editor);
+            createFields(editor, form);
+            addFormInBody(form);
             submitForm(form);
         }
+    }
+
+    function removeFormIfExists(name) {
+        let element = document.getElementById(name);
+
+        if (!!element)
+            element.parentNode.removeChild(element);
     }
 
     function createFormEmpty(editor) {
@@ -81,14 +83,6 @@
         };
 
         return createField(field);
-    }
-
-    function updateValueFieldWithHtml(editor) {
-        let selector = `#${pluginNameForm} > input[name='${editor.config.previewInServerNameFieldWithHtml}']`;
-        let field = document.querySelector(selector);
-        let value = editor.getData();
-
-        field.setAttribute('value', value);
     }
 
     function addFormInBody(form) {
