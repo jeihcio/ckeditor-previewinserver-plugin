@@ -67,7 +67,15 @@
     function createField(field) {
         let input = document.createElement('Input');
         let selector = field.selector;
-        let value = field.value || document.querySelector(selector).value || "";
+        let value = "";
+
+        if (!!field.value)
+            value = field.value;
+
+        let fieldSelected = document.querySelector(selector);
+
+        if (!!fieldSelected && 'value' in fieldSelected)
+            value = document.querySelector(selector).value;
 
         input.setAttribute('type', 'hidden');
         input.setAttribute('name', field.key);
