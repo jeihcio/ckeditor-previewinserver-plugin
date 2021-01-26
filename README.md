@@ -58,7 +58,8 @@ config.previewInServerFields = [
 |selector|Value obtained by the *document.querySelector* when sending the data to the server|
 
 ### Note
-:warning: If you want a fixed value leave the **selector** empty, if you want a dynamic value leave the **value** empty, never fill in both fields
+:warning: If you want a fixed value leave the **selector** empty, if you want a dynamic value leave the **value** empty, never fill in both fields<br/>
+:warning: If necessary, enable pop-up in your browser
 
 ## References
 This plugin was based [preview](https://ckeditor.com/cke4/addon/preview) and [ServerPreview](https://ckeditor.com/old/forums/CKEditor-3.x/CKEditor-and-serverpreview)
