@@ -66,22 +66,27 @@
 
     function createField(field) {
         let input = document.createElement('Input');
-        let selector = field.selector;
-        let value = "";
-
-        if (!!field.value)
-            value = field.value;
-
-        let fieldSelected = document.querySelector(selector);
-
-        if (!!fieldSelected && 'value' in fieldSelected)
-            value = document.querySelector(selector).value;
+        let value = getValue(field);
 
         input.setAttribute('type', 'hidden');
         input.setAttribute('name', field.key);
         input.setAttribute('value', value);
 
         return input;
+    }
+
+    function getValue(field) {
+        if (!!field.value) return field.value;
+
+        let result = "";
+        let fieldSelected = document.querySelector(field.selector);
+
+        if (!fieldSelected) return result;
+
+        if ('value' in fieldSelected)
+            result = fieldSelected.value;
+
+        return result;
     }
 
     function createFieldWithValueTheCkeditor(editor) {
