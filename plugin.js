@@ -23,7 +23,7 @@
         openPreview: function(editor) {
             removeFormIfExists(pluginNameForm);
 
-            let form = createFormEmpty(editor);
+            var form = createFormEmpty(editor);
             createFields(editor, form);
             addFormInBody(form);
             submitForm(form);
@@ -31,16 +31,16 @@
     }
 
     function removeFormIfExists(name) {
-        let element = document.getElementById(name);
+        var element = document.getElementById(name);
 
         if (!!element)
             element.parentNode.removeChild(element);
     }
 
     function createFormEmpty(editor) {
-        let form = document.createElement('Form');
-        let method = editor.config.previewInServerMethod || 'Get';
-        let url = editor.config.previewInServerUrl;
+        var form = document.createElement('Form');
+        var method = editor.config.previewInServerMethod || 'Get';
+        var url = editor.config.previewInServerUrl;
 
         form.setAttribute('method', method);
         form.setAttribute('action', url);
@@ -53,20 +53,20 @@
     }
 
     function createFields(editor, form) {
-        let fields = editor.config.previewInServerFields;
+        var fields = editor.config.previewInServerFields;
 
         fields.forEach(function(field) {
-            let input = createField(field);
+            var input = createField(field);
             form.appendChild(input);
         });
 
-        let input = createFieldWithValueTheCkeditor(editor);
+        var input = createFieldWithValueTheCkeditor(editor);
         form.appendChild(input);
     }
 
     function createField(field) {
-        let input = document.createElement('Input');
-        let value = getValue(field);
+        var input = document.createElement('Input');
+        var value = getValue(field);
 
         input.setAttribute('type', 'hidden');
         input.setAttribute('name', field.key);
@@ -78,8 +78,8 @@
     function getValue(field) {
         if (!!field.value) return field.value;
 
-        let result = "";
-        let fieldSelected = document.querySelector(field.selector);
+        var result = "";
+        var fieldSelected = document.querySelector(field.selector);
 
         if (!fieldSelected) return result;
 
@@ -90,7 +90,7 @@
     }
 
     function createFieldWithValueTheCkeditor(editor) {
-        let field = {
+        var field = {
             key: editor.config.previewInServerNameFieldWithHtml,
             value: editor.getData()
         };
